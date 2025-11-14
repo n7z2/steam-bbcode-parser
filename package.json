@@ -1,0 +1,29 @@
+{
+  "name": "steam-bbcode-parser",
+  "version": "1.0.0",
+  "description": "Efficient parser for converting Steam's BBCode format (game news/updates) to HTML",
+  "main": "index.js",
+  "scripts": {
+    "test": "node examples/example.js"
+  },
+  "keywords": [
+    "steam",
+    "bbcode",
+    "parser",
+    "html",
+    "game",
+    "news",
+    "updates",
+    "valve"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/n7z2/steam-bbcode-parser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/n7z2/steam-bbcode-parser/issues"
+  },
+  "homepage": "https://github.com/n7z2/steam-bbcode-parser#readme"
+}
