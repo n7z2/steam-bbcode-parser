@@ -11,6 +11,15 @@ A lightweight, efficient parser for converting Steam's BBCode format (used in ga
 - ✅ **Browser & Node.js** - Works in both environments
 - ✅ **Well-Tested** - Battle-tested on real Steam game news
 
+## Recent Updates
+
+### YouTube Embed Fix (2025-01-15)
+- **Fixed YouTube video ID extraction** - The semicolon in `[previewyoutube]` tags is INSIDE the quotes, not outside
+- **Correct format**: `[previewyoutube="ULFMhdpFXRE;full"][/previewyoutube]`
+- **Changed embed domain**: Now uses `youtube-nocookie.com` for better privacy and embed compatibility
+- **Added accessibility**: Includes proper `title` attribute and `frameborder` for better browser support
+- **Real-world example**: Tested with Helldivers 2 update news
+
 ## Installation
 
 ```bash
@@ -62,7 +71,7 @@ console.log(html);
 ### Media
 - `[img]url[/img]` - Images
 - `[video mp4="url" poster="url"]...[/video]` - HTML5 video
-- `[previewyoutube=videoId;full]` - YouTube embeds
+- `[previewyoutube="videoId;options"][/previewyoutube]` - YouTube embeds (note: semicolon is inside quotes)
 
 ### Code
 - `[code]code[/code]` - Inline code

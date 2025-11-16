@@ -85,10 +85,18 @@ const CLEANUP_RULES = [
 // Complex handlers that need custom logic
 function handleYouTubeEmbeds(text) {
   return text
-    .replace(/\[previewyoutube="([^"]+)";[^\]]*\][\s\S]*?\[\/previewyoutube\]/gi, (m, id) =>
-      `<div class="youtube-embed" style="margin: 1.5rem 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem; background: #1a1a1a;"><iframe src="https://www.youtube.com/embed/${id}?autoplay=0&rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`)
-    .replace(/\[previewyoutube=([^;\]]+);[^\]]*\]/gi, (m, id) =>
-      `<div class="youtube-embed" style="margin: 1.5rem 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem; background: #1a1a1a;"><iframe src="https://www.youtube.com/embed/${id}?autoplay=0&rel=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>`);
+    // Format: [previewyoutube="videoId;options"][/previewyoutube]
+    // Example: [previewyoutube="ULFMhdpFXRE;full"][/previewyoutube]
+    // Note: The semicolon is INSIDE the quotes
+    .replace(/\[previewyoutube="([^"]+)"\]\[\/previewyoutube\]/gi, (m, content) => {
+      const videoId = content.split(';')[0]; // Extract video ID (part before semicolon)
+      return `<div class="youtube-embed" style="margin: 1.5rem 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem; background: #1a1a1a;"><iframe title="YouTube video player" src="https://www.youtube-nocookie.com/embed/${videoId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+    })
+    // Also handle self-closing or without closing tag: [previewyoutube="videoId;options"]
+    .replace(/\[previewyoutube="([^"]+)"\]/gi, (m, content) => {
+      const videoId = content.split(';')[0]; // Extract video ID (part before semicolon)
+      return `<div class="youtube-embed" style="margin: 1.5rem 0; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem; background: #1a1a1a;"><iframe title="YouTube video player" src="https://www.youtube-nocookie.com/embed/${videoId}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+    });
 }
 
 function handleVideoEmbeds(text) {
